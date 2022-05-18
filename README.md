@@ -1,4 +1,4 @@
-#主機資訊機器人
+# 主機資訊機器人
 
 
 ```
@@ -8,7 +8,7 @@
 請勿詢問如何使用
 ```
 
-#Release Note:
+# Release Note:
 
 * v0.1 First Release
 * v0.2 Fix send message stack issue
