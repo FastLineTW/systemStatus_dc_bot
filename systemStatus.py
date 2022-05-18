@@ -13,6 +13,8 @@ import os
 char_width = 26
 char_height = 5
 
+console_width = 36
+
 update_invl = 1
 
 rx_title = 'If Rx Mbps:'
@@ -60,6 +62,8 @@ def getChart(data, title):
 
 def char_drawing_job(char_width, rx_title, tx_title, rx_pps_title, tx_pps_title, cpu_title, mem_title):
     global char_data
+    last_console_height = 0
+
     bytes_recv_arr_data = [0] * char_width
     bytes_sent_arr_data = [0] * char_width
     pps_recv_arr_data = [0] * char_width
@@ -106,9 +110,13 @@ def char_drawing_job(char_width, rx_title, tx_title, rx_pps_title, tx_pps_title,
             local_char_data += getChart(cpu_arr_data, cpu_title)
         if show_mem_chart:
             local_char_data += getChart(mem_arr_data, mem_title)
-        char_data = '```' + str(datetime.datetime.now()) + local_char_data + '```'
+        char_data = str(datetime.datetime.now()) + local_char_data
         if show_console_chart:
             clear()
+            console_height = local_char_data.count("\n") + 2
+            if last_console_height != console_height:
+                last_console_height = console_height
+                os.system('mode con: cols=%s lines=%s' % (console_width, console_height))
             print(char_data)
 
 
@@ -137,7 +145,7 @@ async def discord_bot_job(update_invl, chID):
     while True:
         try:
             if not message_id == None:
-                await edit_message(char_data)
+                await edit_message('```' + char_data + '```')
         except Exception as err:
             print(err)
             print('Total char_data_len = ' + str(char_data))
