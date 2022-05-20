@@ -13,7 +13,8 @@ import os
 char_width = 26
 char_height = 5
 
-console_width = 36
+# 0 = auto size
+console_width = 0
 
 update_invl = 1
 
@@ -30,11 +31,12 @@ show_pps_rx_chart = True
 show_pps_tx_chart = True
 show_cpu_chart = True
 show_mem_chart = True
-show_console_chart = False
+show_console_chart = True
 
+bot_enabled = True
 bot_name = 'Server Status'
-bot_token = ''
-channel_id = 123
+bot_token = 'OTcyNDcyMDIzMTY5MjU3NTUy.G5MIFF.lDX31kMcSZaIbeNE5saAbV8wjPXqFyebFramLQ'
+channel_id = 977082774299246612
 
 ########## Config ##########
 
@@ -49,6 +51,9 @@ char_data = ''
 
 if char_width > 100:
     char_width = 100
+
+if console_width == 0:
+    console_width = char_width + 10
 
 if update_invl < 1:
     update_invl = 1
@@ -155,12 +160,12 @@ async def discord_bot_job(update_invl, chID):
 threading.Thread(target=char_drawing_job,
                  args=(char_width, rx_title, tx_title, rx_pps_title, tx_pps_title, cpu_title, mem_title,)).start()
 
+if bot_enabled:
+    @discordClient.event
+    async def on_ready():
+        await discordClient.user.edit(username=bot_name)
+        loop.create_task(discord_bot_job(update_invl, channel_id))
+        # threading.Thread(target=discord_bot_job, args=(update_invl, channel_id,)).start()
 
-@discordClient.event
-async def on_ready():
-    await discordClient.user.edit(username=bot_name)
-    loop.create_task(discord_bot_job(update_invl, channel_id))
-    # threading.Thread(target=discord_bot_job, args=(update_invl, channel_id,)).start()
 
-
-discordClient.run(bot_token)
+    discordClient.run(bot_token)
