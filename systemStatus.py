@@ -35,12 +35,12 @@ show_console_chart = True
 
 bot_enabled = True
 bot_name = 'Server Status'
-bot_token = 'OTcyNDcyMDIzMTY5MjU3NTUy.G5MIFF.lDX31kMcSZaIbeNE5saAbV8wjPXqFyebFramLQ'
-channel_id = 977082774299246612
+bot_token = 'token'
+channel_id = 0
 
 ########## Config ##########
 
-version = '220518v0.2'
+version = '220520v0.3'
 discordClient = discord.Client()
 loop = asyncio.get_event_loop()
 clear = lambda: os.system('cls')
