@@ -12,6 +12,7 @@
 
 * v0.1 First Release
 * v0.2 Fix send message stack issue
+* v0.3 Adaptive console size & add option for toggling bot
 
 # Installation:
 ```
